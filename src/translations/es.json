@@ -1,0 +1,29 @@
+{
+  "translation": {
+    "mapSearch": {
+      "placeholder": "¿Adonde?",
+      "buttons": {
+        "confirm": "Confirmar",
+        "cancel": "Cancelar"
+      }
+    },
+    "modalLng": {
+      "title": "Seleccionar idioma",
+      "buttonClose": "Cerrar"
+    },
+    "dataClient": {
+      "title": {
+        "name": "NOMBRE DE IDENTIFICACIÓN",
+        "email": "ID DE CORREO ELECTRÓNICO",
+        "fone": "ID DEL TELÉFONO"
+      }
+    },
+    "optionsPayment": {
+      "title": "Opciones de pago",
+      "method": {
+        "dinheiro": "Dinero",
+        "card": "Tarjeta"
+      }
+    }
+  }
+}

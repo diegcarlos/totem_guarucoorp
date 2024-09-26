@@ -1,0 +1,29 @@
+{
+  "translation": {
+    "mapSearch": {
+      "placeholder": "Where to?",
+      "buttons": {
+        "confirm": "Confirm",
+        "cancel": "Cancel"
+      }
+    },
+    "modalLng": {
+      "title": "Select language",
+      "buttonClose": "Close"
+    },
+    "dataClient": {
+      "title": {
+        "name": "NAME IDENTIFICATION",
+        "email": "EMAIL IDENTIFICATION",
+        "fone": "PHONE IDENTIFICATION"
+      }
+    },
+    "optionsPayment": {
+      "title": "Payment Options",
+      "method": {
+        "dinheiro": "Money",
+        "card": "Card"
+      }
+    }
+  }
+}
