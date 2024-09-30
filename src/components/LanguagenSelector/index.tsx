@@ -1,7 +1,7 @@
-import {IconOutline as Icon} from '@ant-design/icons-react-native';
-import React, {useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import {Modal, View} from 'react-native';
+import { IconOutline as Icon } from '@ant-design/icons-react-native';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Modal, View } from 'react-native';
 import {
   CloseButton,
   ImageText,
@@ -11,18 +11,18 @@ import {
   TextButton,
   TouchableOpacity,
 } from './styled';
-import {useLanguage} from '/context/LanguageContext';
+import { useLanguage } from '/context/LanguageContext';
 
 interface Props {
   children?: React.ReactNode;
 }
 
 const LanguageSelector = (props: Props) => {
-  const {children} = props;
+  const { children } = props;
   const [isModalVisible, setModalVisible] = useState(false);
-  const {i18n, t} = useTranslation();
+  const { i18n, t } = useTranslation();
 
-  const {setCurrentLanguage, currentLanguage} = useLanguage();
+  const { setCurrentLanguage, currentLanguage } = useLanguage();
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -33,7 +33,7 @@ const LanguageSelector = (props: Props) => {
   };
 
   return (
-    <View>
+    <View style={{ zIndex: 20 }}>
       <TouchableOpacity onPress={toggleModal}>{children}</TouchableOpacity>
 
       <Modal

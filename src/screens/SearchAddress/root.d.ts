@@ -4,6 +4,7 @@ export interface RootObject {
 }
 interface Prediction {
   description: string;
+  distance_meters: number;
   matched_substrings: Matchedsubstring[];
   place_id: string;
   reference: string;

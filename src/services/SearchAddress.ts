@@ -1,12 +1,13 @@
-import axios, {AxiosResponse} from 'axios';
-import {env} from '/env';
+import axios, { AxiosResponse } from 'axios';
+import { env } from '/env';
 
-export const SearchAddress = async (input: string) => {
+export const SearchAddressGoogle = async (input: string, origin: string) => {
   const searchAddress: AxiosResponse<any> = await axios.get(
     env.URL_API_GOOGLE_GEO,
     {
       params: {
         input,
+        origin,
         key: env.GOOGLE_MAPS_API,
         components: 'country:br',
         language: 'pt_BR',

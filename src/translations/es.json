@@ -2,10 +2,20 @@
   "translation": {
     "mapSearch": {
       "placeholder": "¿Adonde?",
+      "alterar": "Alterar",
+      "card": {
+        "title": "Punto de partida",
+        "valor": "Valor"
+      },
       "buttons": {
         "confirm": "Confirmar",
         "cancel": "Cancelar"
       }
+    },
+    "search": {
+      "placeholder": "¿A dónde vamos?",
+      "empty": "Buscar una ubicación",
+      "notFound": "Ubicación no encontrada"
     },
     "modalLng": {
       "title": "Seleccionar idioma",

@@ -5,4 +5,13 @@ export const env = {
 
   LAT_DEFAULT: '-23.425246',
   LNG_DEFAULT: '-46.481826',
+  DEFAULT_END:
+    'Aeroporto Internacional de Guarulhos, Terminal 2 - Aeroporto, Guarulhos - SP, 07155, Brasil',
+  TAXI_API: {
+    URL: 'https://portal.taxidigital.net/APITD/',
+    AUTH: {
+      USERNAME: 'integracaogenialtec@gcop.com',
+      PASSWORD: 'Genialtec',
+    },
+  },
 };
