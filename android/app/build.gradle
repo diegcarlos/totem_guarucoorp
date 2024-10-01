@@ -14,9 +14,8 @@ repositories {
 }
 
 dependencies {
-    implementation(name: 'Sitef', ext: 'aar')
-    implementation project(':react-native-usb-thermal-printer')
-
+    implementation(name: 'sitefpay-release', ext: 'aar')
+    // implementation fileTree(include: [ '.jar', '.aar'], dir: 'libs')
 }
 
 /**

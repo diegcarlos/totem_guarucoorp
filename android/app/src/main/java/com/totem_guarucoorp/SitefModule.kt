@@ -1,26 +1,26 @@
 package com.totem_guarucoorp
 
+import br.com.testes.sitef.SitefPag
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.bridge.Promise
 
-import com.totem_guarucoorp.Sitef
 
 
 
 class SitefModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
 
-    private val sitefInstance: Sitef = Sitef()
+    private val sitefInstance: SitefPag = SitefPag()
 
     override fun getName(): String {
-        return "SitefModule"
+        return "SitefPag"
     }
 
     @ReactMethod
-    fun pagar(param: String, promise: Promise) {
+    fun pagar(promise: Promise) {
         try {
-            val result = sitefInstance.pagar(param)
+            val result = sitefInstance.pagar()
             promise.resolve(result)
         } catch (e: Exception) {
             promise.reject("Erro ao chamar o método pagar", e)
