@@ -1,8 +1,12 @@
-import {styled} from 'styled-components/native';
+import { Dimensions } from 'react-native';
+import { styled } from 'styled-components/native';
+
+const { width, fontScale } = Dimensions.get('window');
 
 export const ViewRoot = styled.View`
   display: flex;
   height: 100%;
+  width: ${width}px;
   justify-content: center;
   align-items: center;
   position: relative;
@@ -51,7 +55,7 @@ export const IconClose = styled.TouchableOpacity`
 
 export const TextHeader = styled.Text`
   font-weight: 600;
-  font-size: 18px;
+  font-size: ${fontScale * 18}px;
 `;
 
 export const GroupButtons = styled.View`
@@ -81,11 +85,11 @@ export const ImageBackground = styled.Image`
 
 export const TextButton = styled.Text`
   font-weight: 700;
-  font-size: 45px;
+  font-size: ${fontScale * 45}px;
   color: #000000;
 `;
 
-export const HeaderOptions = styled.View<{viewTop?: number}>`
+export const HeaderOptions = styled.View<{ viewTop?: number }>`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -100,6 +104,6 @@ export const HeaderOptions = styled.View<{viewTop?: number}>`
 
 export const TitleHeaderText = styled.Text`
   color: #000000;
-  font-size: 28px;
+  font-size: ${fontScale * 28}px;
   font-weight: 600;
 `;

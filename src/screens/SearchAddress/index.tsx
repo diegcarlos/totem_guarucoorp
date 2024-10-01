@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import { env } from 'env';
 import { decode } from 'google-polyline';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, View } from 'react-native';
+import { ActivityIndicator, Dimensions, FlatList, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { Divider } from 'screens/Content/styled';
 import { postEstimate } from 'services/Estimate';
@@ -34,6 +34,8 @@ import { RootObject } from './root';
 
 const latitude = Number(env.LAT_DEFAULT);
 const longitude = Number(env.LNG_DEFAULT);
+
+const { width } = Dimensions.get('window');
 
 export default function SearchAddress({ navigation }: any) {
   const { setSearchTrajeto } = useData();
@@ -201,7 +203,7 @@ export default function SearchAddress({ navigation }: any) {
         ) : (
           <FlatList
             ItemSeparatorComponent={Divider}
-            style={{ height: '100%', display: 'flex' }}
+            style={{ height: '100%', display: 'flex', width }}
             showsVerticalScrollIndicator={true}
             data={resultSearch}
             renderItem={({ item }) => {

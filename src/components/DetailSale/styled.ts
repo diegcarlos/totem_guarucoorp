@@ -1,14 +1,14 @@
 import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
 
-const { fontScale } = Dimensions.get('window');
+const { fontScale, width } = Dimensions.get('window');
 
 export const Container = styled.View`
   display: flex;
   gap: 15px;
   position: absolute;
   bottom: 0;
-  width: 100%;
+  width: ${width}px;
   background-color: #f0f0f0;
 `;
 
@@ -20,6 +20,7 @@ export const Lang = styled.View`
   height: 75px;
   border-radius: 50px;
   background-color: #fff;
+  elevation: 4;
 `;
 
 export const Card = styled.View`
@@ -35,7 +36,7 @@ export const CardHeader = styled.View`
   padding: 10px;
 `;
 export const CardTitle = styled.Text`
-  font-size: ${fontScale + 25}px;
+  font-size: ${fontScale * 25}px;
   font-weight: 600;
 `;
 

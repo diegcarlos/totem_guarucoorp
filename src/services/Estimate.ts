@@ -48,6 +48,6 @@ export const postEstimate = async (
     );
     return resp.data;
   } catch (error) {
-    console.log(JSON.stringify(error));
+    console.error(JSON.stringify(error));
   }
 };

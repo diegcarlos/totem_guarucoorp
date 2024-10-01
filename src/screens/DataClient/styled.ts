@@ -1,9 +1,12 @@
-import {TextInput as BaseTextInput} from 'react-native';
-import {styled} from 'styled-components/native';
+import { TextInput as BaseTextInput, Dimensions } from 'react-native';
+import { styled } from 'styled-components/native';
+
+const { width, fontScale } = Dimensions.get('window');
 
 export const ViewRoot = styled.View`
   display: flex;
   height: 100%;
+  width: ${width}px;
   justify-content: center;
   align-items: center;
   position: relative;
@@ -36,7 +39,7 @@ export const HeaderContent = styled.View`
 
 export const TextHeader = styled.Text`
   font-weight: 600;
-  font-size: 18px;
+  font-size: ${fontScale * 18}px;
   color: #000000;
 `;
 
@@ -49,7 +52,7 @@ export const ImageBackground = styled.Image`
   opacity: 0.5;
 `;
 
-export const HeaderOptions = styled.View<{viewTop?: number}>`
+export const HeaderOptions = styled.View<{ viewTop?: number }>`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -65,14 +68,14 @@ export const HeaderOptions = styled.View<{viewTop?: number}>`
 export const ViewBack = styled.View``;
 
 export const TitleHeaderText = styled.Text`
-  font-size: 28px;
+  font-size: ${fontScale * 28}px;
   font-weight: 600;
   color: #000000;
 `;
 
 export const TextInput = styled(BaseTextInput)`
   font-weight: 600;
-  font-size: 30px;
+  font-size: ${fontScale * 30}px;
   color: #000000;
   text-align: center;
   width: 90%;

@@ -95,7 +95,7 @@ export default function Content({ navigation }: any) {
   }, [searchTrajeto]);
 
   useEffect(() => {
-    if (map.current && searchTrajeto?.bounds) {
+    if (map.current && searchTrajeto?.bounds && dataPolyline.length > 0) {
       const bounds = searchTrajeto?.bounds;
       const northeast = {
         latitude: bounds.northeast.lat,
@@ -157,7 +157,6 @@ export default function Content({ navigation }: any) {
       <MapView
         ref={map}
         style={styles.map}
-        onRegionChange={d => console.log(d)}
         region={{
           latitude,
           longitude,
@@ -209,10 +208,7 @@ export default function Content({ navigation }: any) {
         </Box>
       )}
       {dataPolyline.length > 0 && (
-        <DetailSale
-          onConfirm={navigation.push('dataClient')}
-          dataLocation={searchTrajeto}
-        />
+        <DetailSale navigation={navigation} dataLocation={searchTrajeto} />
       )}
     </ViewRoot>
   );

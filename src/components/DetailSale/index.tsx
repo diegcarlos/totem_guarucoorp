@@ -3,7 +3,8 @@ import LanguageSelector from 'components/LanguagenSelector';
 import { TypesTrajeto } from 'context/DataContext';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Image } from 'react-native';
+import { Button, Image } from 'react-native';
+import { onPrintDeviceList } from 'react-native-usb-thermal-printer';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {
   Card,
@@ -27,11 +28,11 @@ import Logo from '/assets/images/logo.png';
 
 interface Props {
   dataLocation: TypesTrajeto;
-  onConfirm?: () => void;
+  navigation: any;
 }
 
 export const DetailSale = (props: Props) => {
-  const { dataLocation, onConfirm } = props;
+  const { dataLocation, navigation } = props;
   const { t } = useTranslation();
   return (
     <Container>
@@ -73,8 +74,12 @@ export const DetailSale = (props: Props) => {
               (dataLocation?.valueDistance / 5.44).toFixed(2)}
             US$
           </TextTotal>
+          <Button
+            title="teste"
+            onPress={() => console.log(onPrintDeviceList())}
+          />
           <ConfirmPress>
-            <TextConfirm onPress={onConfirm}>
+            <TextConfirm onPress={() => navigation.push('dataClient')}>
               {t('mapSearch.buttons.confirm')}
             </TextConfirm>
           </ConfirmPress>

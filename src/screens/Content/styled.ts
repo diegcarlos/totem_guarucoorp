@@ -5,7 +5,7 @@ const { width, fontScale } = Dimensions.get('window');
 
 export const ViewRoot = styled.View`
   position: relative;
-  width: 100%;
+  width: ${width}px;
   height: 100%;
   flex: 1;
   justify-content: center;
@@ -66,7 +66,7 @@ export const TextInput = styled.TextInput`
   color: #ffffff;
   height: 100%;
   font-weight: 700;
-  font-size: ${fontScale + 15}px;
+  font-size: ${fontScale * 15}px;
   text-align: center;
 `;
 
@@ -84,7 +84,7 @@ export const TouchableOpacity = styled.TouchableOpacity`
 
 export const Text = styled.Text`
   display: flex;
-  font-size: 18px;
+  font-size: ${fontScale * 18}px;
   color: #000000;
   width: 100%;
   text-align: justify;
@@ -115,7 +115,7 @@ export const ViewInitEnd = styled.View`
   z-index: 99;
   top: 0px;
   margin-top: 50px;
-  width: 100%;
+  width: ${width}px;
   height: 90px;
 `;
 
@@ -155,7 +155,7 @@ export const GroupTextRota = styled.View`
 
 export const TextRota = styled.Text`
   font-weight: 800;
-  font-size: 16px;
+  font-size: ${fontScale * 16}px;
 `;
 
 export const BackClear = styled.Pressable`
