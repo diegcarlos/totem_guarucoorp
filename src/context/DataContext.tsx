@@ -1,6 +1,6 @@
-import { env } from 'env';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { MapPolygonProps } from 'react-native-maps';
+import { env } from '../env';
 
 export interface TypesTrajeto {
   startAddress: string;

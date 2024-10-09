@@ -3,8 +3,7 @@ import LanguageSelector from 'components/LanguagenSelector';
 import { TypesTrajeto } from 'context/DataContext';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Image } from 'react-native';
-import { onPrintDeviceList } from 'react-native-usb-thermal-printer';
+import { Image, NativeModules } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {
   Card,
@@ -26,6 +25,18 @@ import {
 } from './styled';
 import Logo from '/assets/images/logo.png';
 
+interface TypesConfigSitef {
+  ipTEF: String;
+  cnpj: String;
+  terminalTef?: String;
+  cnpjAutomacao: String;
+  empresaSitef: String;
+  comExterior: number;
+  otp: String;
+  nomeIntegracao: String;
+  promise?: Promise<{}>;
+}
+
 interface Props {
   dataLocation: TypesTrajeto;
   navigation: any;
@@ -34,6 +45,8 @@ interface Props {
 export const DetailSale = (props: Props) => {
   const { dataLocation, navigation } = props;
   const { t } = useTranslation();
+  const { SitefPag } = NativeModules;
+
   return (
     <Container>
       <Lang>
@@ -74,10 +87,7 @@ export const DetailSale = (props: Props) => {
               (dataLocation?.valueDistance / 5.44).toFixed(2)}
             US$
           </TextTotal>
-          <Button
-            title="teste"
-            onPress={() => console.log(onPrintDeviceList())}
-          />
+
           <ConfirmPress>
             <TextConfirm onPress={() => navigation.push('dataClient')}>
               {t('mapSearch.buttons.confirm')}

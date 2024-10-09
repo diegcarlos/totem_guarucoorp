@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useLanguage } from 'context/LanguageContext';
 import dayjs from 'dayjs';
-import { env } from 'env';
 import { decode } from 'google-polyline';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Dimensions, FlatList, View } from 'react-native';
@@ -9,6 +8,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import { Divider } from 'screens/Content/styled';
 import { postEstimate } from 'services/Estimate';
 import { SearchAddressGoogle } from 'services/SearchAddress';
+import { env } from '../../env';
 import {
   BoxInput,
   Dots,

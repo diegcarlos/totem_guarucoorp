@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { env } from '/env';
+import { env } from '../env';
 
 export const SearchAddressGoogle = async (input: string, origin: string) => {
   const searchAddress: AxiosResponse<any> = await axios.get(

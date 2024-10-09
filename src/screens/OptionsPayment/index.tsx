@@ -10,13 +10,18 @@ import {
 } from './styled';
 import splash from '/assets/images/splashPagamento.jpg';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Dimensions, NativeModules, TouchableOpacity } from 'react-native';
+import {
+  Alert,
+  Dimensions,
+  NativeModules,
+  TouchableOpacity,
+} from 'react-native';
 import Glob from '/components/Glob';
 import LanguageSelector from '/components/LanguagenSelector';
 
-const { SitefModule } = NativeModules;
+const { SitefPag } = NativeModules;
 
 export default function OptionsPayment() {
   const { t } = useTranslation();
@@ -30,18 +35,26 @@ export default function OptionsPayment() {
     setSelectPayments({ payment: method });
   };
 
-  const sitefTeste = async () => {
+  const handleClickSitefPag = async (tipoPag: number) => {
     try {
-      const resp = await SitefModule.pagar();
-      console.log(resp);
+      const response = await SitefPag.configurarSitef(
+        '10.0.2.2;10.0.2.2:20036', // ipTEF
+        '09517945000150', // cnpj
+        '1', // terminalTef
+        '00000000', // cnpjAutomacao
+        '00000001', // empresaSitef
+        0, // comExterior (kotlin.Int)
+        '0', // otp
+        '', // nomeIntegracao
+      );
+
+      const pagar = await SitefPag.pagar(tipoPag, 1, '12.45');
+      console.log(pagar);
     } catch (error) {
-      console.error(error);
+      Alert.alert('Erro', 'Transação cancelada');
+      console.log(error);
     }
   };
-
-  useEffect(() => {
-    sitefTeste();
-  }, []);
 
   return (
     <ViewRoot>
@@ -76,11 +89,13 @@ export default function OptionsPayment() {
       )}
       {selectPayments.payment === 'CARTAO' && (
         <GroupButtons>
-          <Button>
+          <Button onPress={() => handleClickSitefPag(1)}>
             <TextButton>DEBITO</TextButton>
           </Button>
           <Button>
-            <TextButton>CREDITO</TextButton>
+            <TextButton onPress={() => handleClickSitefPag(2)}>
+              CREDITO
+            </TextButton>
           </Button>
         </GroupButtons>
       )}

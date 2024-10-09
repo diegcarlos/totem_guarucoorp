@@ -6,6 +6,7 @@ import { Dimensions, StyleSheet, View } from 'react-native';
 import MapView, { MapPolygonProps, Marker, Polyline } from 'react-native-maps';
 import 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { env } from '../../env';
 import {
   BackClear,
   Box,
@@ -18,7 +19,6 @@ import {
   ViewRoot,
   ViewRota,
 } from './styled';
-import { env } from '/env';
 import { useKeyboardStatus } from '/hooks/useKeyboardStatus';
 
 import { useTranslation } from 'react-i18next';
