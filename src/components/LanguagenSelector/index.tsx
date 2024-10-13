@@ -1,7 +1,7 @@
-import { IconOutline as Icon } from '@ant-design/icons-react-native';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Modal, View } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import {
   CloseButton,
   ImageText,

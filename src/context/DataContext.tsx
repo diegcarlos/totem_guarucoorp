@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import { Alert, NativeModules } from 'react-native';
 import { MapPolygonProps } from 'react-native-maps';
 import { env } from '../env';
 
@@ -15,14 +16,41 @@ export interface TypesTrajeto {
   polygon: MapPolygonProps['coordinates'][];
   bounds?: any;
 }
+
+// const response = await SitefPag.configurarSitef(
+//   '192.168.3.3;192.168.3.3:20036', // ipTEF
+//   '09517945000150', // cnpj
+//   'SE000001', // terminalTef
+//   '00000000', // cnpjAutomacao
+//   '00000000', // empresaSitef
+//   0, // comExterior (kotlin.Int)
+//   '0', // otp
+//   '', // nomeIntegracao
+// );
+
+export interface TypesConfigApp {
+  ipTEF: string; // ipTEF
+  cnpg: string; // cnpj
+  terminalTef: string; // terminalTef
+  cnpjAutomacao: string; // cnpjAutomacao
+  empresaSitef: string; // empresaSitef
+  conExterior: number; // comExterior (kotlin.Int)
+  otp: string; // otp
+  nomeIntegração: string; // nomeIntegracao
+}
 interface Props {
   searchTrajeto: TypesTrajeto;
   setSearchTrajeto: (data: TypesTrajeto) => void;
 }
 
+const { SitefPag } = NativeModules;
+
 export const DataContext = createContext({} as Props);
 
 export const DataProvider = ({ children }: { children: React.ReactNode }) => {
+  const [configApp, setConfigApp] = useState<TypesConfigApp>(
+    {} as TypesConfigApp,
+  );
   const [searchTrajeto, setSearchTrajeto] = useState<TypesTrajeto>({
     startAddress: env.DEFAULT_END,
     endAddress: '',
@@ -36,7 +64,24 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     polygon: [],
   });
 
-  useEffect(() => {}, []);
+  const handleClickSitefPag = async (
+    tipoPag: number,
+    value: string,
+    navigation: any,
+  ) => {
+    try {
+      const pagar = await SitefPag.pagar(tipoPag, 1, value);
+      navigation.replace('print-payment');
+    } catch (error) {
+      Alert.alert('Erro', 'Transação cancelada');
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (!configApp) {
+    }
+  }, []);
   return (
     <DataContext.Provider value={{ searchTrajeto, setSearchTrajeto }}>
       {children}

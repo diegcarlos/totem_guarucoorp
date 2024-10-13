@@ -48,6 +48,7 @@ export const Input = styled.TextInput`
   margin-left: 65px;
   margin-right: 25px;
   font-size: ${fontScale * 18}px;
+  color: #474747;
   font-weight: 600;
 `;
 
@@ -84,6 +85,7 @@ export const TextInput = styled.Text`
   margin-right: 25px;
   font-size: ${fontScale * 18}px;
   font-weight: 700;
+  color: #474747;
 `;
 
 export const TextMain = styled.Text`
@@ -92,17 +94,20 @@ export const TextMain = styled.Text`
   height: auto;
   font-size: 22px;
   font-weight: 800;
+  color: #474747;
 `;
 
 export const TextSecondary = styled.Text`
   font-size: 16px;
   font-weight: 500;
   color: #adadad;
+  color: #474747;
 `;
 
 export const TextKms = styled.Text`
   position: absolute;
   font-size: 14px;
+  color: #474747;
   font-weight: 600;
   top: 8px;
   right: 8px;
@@ -118,6 +123,7 @@ export const ViewEmpty = styled.View`
 
 export const TextEmpty = styled.Text`
   font-size: 18px;
+  color: #474747;
 `;
 
 export const LoadingPress = styled.View`
@@ -140,4 +146,5 @@ export const TextLoadingPress = styled.Text`
   justify-content: center;
   font-size: ${fontScale * 25}px;
   color: #fff;
+  color: #474747;
 `;

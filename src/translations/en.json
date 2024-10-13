@@ -23,9 +23,28 @@
     },
     "dataClient": {
       "title": {
-        "name": "NAME IDENTIFICATION",
-        "email": "EMAIL IDENTIFICATION",
-        "fone": "PHONE IDENTIFICATION"
+        "name": "Name",
+        "email": "Email",
+        "fone": "Phone",
+        "pagamento": "Payment"
+      },
+      "description": {
+        "name": "Please provide your name for identification confirmation",
+        "email": "Please provide your email for identification confirmation",
+        "fone": "Please provide your phone number for identification confirmation"
+      },
+      "input": {
+        "placeholder": "Type here..."
+      },
+      "buttons": {
+        "next": "Next",
+        "prev": "Prevent",
+        "finish": "Make payment"
+      },
+      "payment": {
+        "dinheiro": "Money",
+        "card-credit": "Credit card",
+        "card-debito": "Debit card"
       }
     },
     "optionsPayment": {

@@ -23,9 +23,28 @@
     },
     "dataClient": {
       "title": {
-        "name": "NOMBRE DE IDENTIFICACIÓN",
-        "email": "ID DE CORREO ELECTRÓNICO",
-        "fone": "ID DEL TELÉFONO"
+        "name": "Nonbre",
+        "email": "Correo Electrónico",
+        "fone": "Teléfono",
+        "pagamento": "Pago"
+      },
+      "description": {
+        "name": "Por favor, proporciona tu nombre para la confirmación de identificación",
+        "email": "Por favor, proporciona tu correo electrónico para la confirmación de identificación",
+        "fone": "Por favor, proporciona tu número de teléfono para la confirmación de identificación"
+      },
+      "input": {
+        "placeholder": "Escribe aquí..."
+      },
+      "buttons": {
+        "next": "Próximo",
+        "prev": "Rebobinar",
+        "finish": "Realizar el pago"
+      },
+      "payment": {
+        "dinheiro": "Dinero",
+        "card-credit": "Tarjeta de crédito",
+        "card-debito": "Tarjeta de débito"
       }
     },
     "optionsPayment": {

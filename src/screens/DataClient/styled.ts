@@ -4,11 +4,9 @@ import { styled } from 'styled-components/native';
 const { width, fontScale } = Dimensions.get('window');
 
 export const ViewRoot = styled.View`
-  display: flex;
-  height: 100%;
+  flex: 1;
   width: ${width}px;
-  justify-content: center;
-  align-items: center;
+  margin-top: 120px;
   position: relative;
 `;
 
@@ -73,12 +71,31 @@ export const TitleHeaderText = styled.Text`
   color: #000000;
 `;
 
+export const ViewTextInputContainer = styled.View`
+  flex: 1;
+  width: ${width}px;
+  display: flex;
+  align-items: 'center';
+  padding-top: 10px;
+  position: 'relative';
+  justify-content: 'center';
+`;
+
+export const ViewInput = styled.View`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: ${width}px;
+  height: 80px;
+  background-color: #eeeeee;
+`;
+
 export const TextInput = styled(BaseTextInput)`
   font-weight: 600;
-  font-size: ${fontScale * 30}px;
+  font-size: ${fontScale * 25}px;
   color: #000000;
   text-align: center;
-  width: 90%;
+  width: ${width}px;
   height: 80px;
 `;
 
@@ -92,4 +109,69 @@ export const Content = styled.View`
   width: 100%;
   height: 80px;
   bottom: 0;
+`;
+
+export const ProgressStepContent = styled.View`
+  display: flex;
+  flex: 1;
+  width: ${width}px;
+`;
+
+export const TextDescription = styled.Text`
+  width: 350px;
+  position: absolute;
+  top: 25px;
+  text-align: center;
+  font-size: ${fontScale * 22}px;
+`;
+
+export const ButtonStep = styled.Pressable<{
+  disabled?: boolean;
+  finish?: boolean;
+}>`
+  width: ${width / 3}px;
+  height: 50px;
+  background-color: ${p =>
+    p.disabled ? '#dddddd' : p.finish ? '#237a05' : '#021e7e'};
+  border-radius: 12px;
+  elevation: 4;
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const TextButton = styled.Text`
+  color: #ffffff;
+  font-weight: 600;
+`;
+
+export const ViewPayment = styled.View`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  elevation: 4;
+`;
+export const ViewPayContainer = styled.View`
+  display: flex;
+  padding: 10px;
+  border-radius: 6px;
+  width: 200px;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  background-color: #dddddd;
+  margin-bottom: 8px;
+`;
+export const TextPay = styled.Text`
+  font-size: ${fontScale * 22}px;
+  width: 220px;
+  text-align: center;
+`;
+export const TextTotal = styled.Text`
+  font-size: ${fontScale * 22}px;
+  font-weight: 600;
+  color: #021e7e;
 `;

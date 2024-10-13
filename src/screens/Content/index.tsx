@@ -23,6 +23,7 @@ import { useKeyboardStatus } from '/hooks/useKeyboardStatus';
 
 import { useTranslation } from 'react-i18next';
 
+import LongPressButton from 'components/LongPressButton';
 import { useData } from 'context/DataContext';
 import { Dots } from 'screens/SearchAddress/styled';
 import { useLogic } from './useLogic';
@@ -38,7 +39,7 @@ export default function Content({ navigation }: any) {
     MapPolygonProps['coordinates']
   >([]);
 
-  const { height } = Dimensions.get('window');
+  const { height } = Dimensions.get('screen');
 
   const { t } = useTranslation();
   const { defaultHeader, currentHeader } = useLogic();
@@ -198,12 +199,11 @@ export default function Content({ navigation }: any) {
               {t('mapSearch.placeholder')}
             </Text>
 
-            <Icon
-              name="search"
-              style={{ position: 'absolute', right: 20 }}
-              color="#ffffff"
-              size={36}
-            />
+            <LongPressButton
+              onPressContinuous={() => navigation.replace('config-default')}
+              style={{ position: 'absolute', right: 20 }}>
+              <Icon name="search" color="#ffffff" size={36} />
+            </LongPressButton>
           </SubBox>
         </Box>
       )}

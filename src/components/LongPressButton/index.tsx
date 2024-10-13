@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import type { TouchableOpacityProps } from "react-native";
-import { TouchableOpacity } from "react-native";
+import React, { useState } from 'react';
+import type { TouchableOpacityProps } from 'react-native';
+import { Pressable } from 'react-native';
 
 interface Props extends TouchableOpacityProps {
   children: React.ReactNode;
@@ -25,13 +25,9 @@ const LongPressButton = (props: Props) => {
   };
 
   return (
-    <TouchableOpacity
-      {...rest}
-      onPressIn={handlePressIn}
-      onPressOut={handlePressOut}
-    >
+    <Pressable {...rest} onPressIn={handlePressIn} onPressOut={handlePressOut}>
       {children}
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

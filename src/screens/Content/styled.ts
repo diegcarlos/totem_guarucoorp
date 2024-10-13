@@ -63,6 +63,7 @@ export const SectionList = styled.View`
 `;
 
 export const TextInput = styled.TextInput`
+  color: #474747;
   color: #ffffff;
   height: 100%;
   font-weight: 700;
@@ -83,6 +84,7 @@ export const TouchableOpacity = styled.TouchableOpacity`
 `;
 
 export const Text = styled.Text`
+  color: #474747;
   display: flex;
   font-size: ${fontScale * 18}px;
   color: #000000;
@@ -138,7 +140,8 @@ export const ViewRota = styled.TouchableOpacity`
 
 export const GroupViewRota = styled.View`
   height: 100%;
-  width: 80%;
+  overflow: hidden;
+  width: ${width - 250}px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -154,6 +157,7 @@ export const GroupTextRota = styled.View`
 `;
 
 export const TextRota = styled.Text`
+  color: #474747;
   font-weight: 800;
   font-size: ${fontScale * 16}px;
 `;

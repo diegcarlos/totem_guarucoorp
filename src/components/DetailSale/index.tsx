@@ -3,7 +3,7 @@ import LanguageSelector from 'components/LanguagenSelector';
 import { TypesTrajeto } from 'context/DataContext';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Image, NativeModules } from 'react-native';
+import { Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {
   Card,
@@ -45,7 +45,6 @@ interface Props {
 export const DetailSale = (props: Props) => {
   const { dataLocation, navigation } = props;
   const { t } = useTranslation();
-  const { SitefPag } = NativeModules;
 
   return (
     <Container>
@@ -60,7 +59,7 @@ export const DetailSale = (props: Props) => {
         </CardHeader>
         <CardContent cor="blue">
           <DataContent>
-            <Icon name="car" size={30} />
+            <Icon name="car" color="#d2d2d2" size={30} />
             <Trajeto>
               <TextMain>{dataLocation?.summary}</TextMain>
               <TextWng>{dataLocation?.warning}</TextWng>

@@ -1,5 +1,5 @@
-import { Input } from "@/components/Input";
-import { styled } from "styled-components/native";
+import { Input } from '@components/Input';
+import { styled } from 'styled-components/native';
 
 export const View = styled.View`
   height: 100%;
@@ -20,8 +20,7 @@ export const InputConfig = styled(Input)`
   border: 1px solid;
   height: 50px;
   width: 300px;
-  border-radius: 15px;
-  margin-top: 15px;
+  border-radius: 8px;
   text-align: center;
 `;
 
@@ -45,4 +44,10 @@ export const TouchableOpacity = styled.TouchableOpacity`
   padding-bottom: 5px;
   margin-top: 5px;
   gap: 5px;
+`;
+
+export const ViewFlex = styled.View`
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
 `;

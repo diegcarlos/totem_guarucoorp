@@ -1,6 +1,6 @@
 import Logo from '/assets/images/logo.png';
 
-import { NavigationContainer } from '@react-navigation/native';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Glob from 'components/Glob';
 import LanguageSelector from 'components/LanguagenSelector';
@@ -10,22 +10,34 @@ import React from 'react';
 import { Dimensions, Image, Pressable, StatusBar, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import ConfigLocationDefault from 'screens/ConfigLocationDefault';
 import Content from 'screens/Content';
 import { default as DataClient } from 'screens/DataClient';
 import Home from 'screens/Home';
 import OptionsPayment from 'screens/OptionsPayment';
+import PrintPayment from 'screens/PrintPayment';
 import SearchAddress from 'screens/SearchAddress';
 
 const Stack = createStackNavigator();
 
 const { width } = Dimensions.get('window');
 
+const theme = {
+  ...DefaultTheme,
+  dark: false,
+  colors: {
+    ...DefaultTheme.colors,
+    background: 'white', // Cor de fundo clara
+    text: 'black', // Cor do texto para o tema claro
+  },
+};
+
 export const Views = () => {
   return (
     <GestureHandlerRootView>
       <DataProvider>
         <LanguageProvider>
-          <NavigationContainer>
+          <NavigationContainer theme={theme}>
             <StatusBar hidden />
             <Stack.Navigator
               initialRouteName="home"
@@ -98,8 +110,22 @@ export const Views = () => {
                 component={Home}
               />
               <Stack.Screen name="content" component={Content} />
-              <Stack.Screen name="dataClient" component={DataClient} />
+              <Stack.Screen
+                name="dataClient"
+                options={{
+                  headerStyle: { height: 120 },
+                  headerShown: true,
+                  headerTransparent: true,
+                }}
+                component={DataClient}
+              />
               <Stack.Screen name="optionsPayment" component={OptionsPayment} />
+              <Stack.Screen name="print-payment" component={PrintPayment} />
+
+              <Stack.Screen
+                name="config-default"
+                component={ConfigLocationDefault}
+              />
               <Stack.Screen
                 name="search-end"
                 component={SearchAddress}

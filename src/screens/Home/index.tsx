@@ -1,17 +1,18 @@
 import * as React from 'react';
-import {Pressable, Video} from './styled';
+import { Pressable } from './styled';
 //@ts-ignore
-import {Text} from 'react-native';
-import {ResizeMode, VideoRef} from 'react-native-video';
+import { Dimensions } from 'react-native';
+import Video, { ResizeMode, VideoRef } from 'react-native-video';
 import coorp from '../../assets/videos/COORP_HOME.mp4';
 
 export default function Home(props: any) {
-  const {navigation} = props;
+  const { height, width } = Dimensions.get('screen');
+  const { navigation } = props;
   const videoRef = React.useRef<VideoRef>(null);
   return (
     <Pressable onPress={() => navigation.push('content')}>
-      <Text>abc</Text>
       <Video
+        style={{ height, width, flex: 1 }}
         ref={videoRef}
         source={coorp}
         controls={false}

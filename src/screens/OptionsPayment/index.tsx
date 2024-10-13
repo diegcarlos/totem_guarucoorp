@@ -1,4 +1,4 @@
-import { IconOutline as Icon } from '@ant-design/icons-react-native';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import {
   Button,
   GroupButtons,
@@ -20,10 +20,9 @@ import {
 } from 'react-native';
 import Glob from '/components/Glob';
 import LanguageSelector from '/components/LanguagenSelector';
-
 const { SitefPag } = NativeModules;
 
-export default function OptionsPayment() {
+export default function OptionsPayment({ navigation }: any) {
   const { t } = useTranslation();
   const [selectPayments, setSelectPayments] = useState<{
     payment: null | string;
@@ -35,21 +34,21 @@ export default function OptionsPayment() {
     setSelectPayments({ payment: method });
   };
 
-  const handleClickSitefPag = async (tipoPag: number) => {
+  const handleClickSitefPag = async (tipoPag: number, value?: string) => {
     try {
       const response = await SitefPag.configurarSitef(
-        '10.0.2.2;10.0.2.2:20036', // ipTEF
+        '192.168.3.3;192.168.3.3:20036', // ipTEF
         '09517945000150', // cnpj
-        '1', // terminalTef
+        'SE000001', // terminalTef
         '00000000', // cnpjAutomacao
-        '00000001', // empresaSitef
+        '00000000', // empresaSitef
         0, // comExterior (kotlin.Int)
         '0', // otp
         '', // nomeIntegracao
       );
 
-      const pagar = await SitefPag.pagar(tipoPag, 1, '12.45');
-      console.log(pagar);
+      const pagar = await SitefPag.pagar(tipoPag, 1, value);
+      navigation.replace('print-payment');
     } catch (error) {
       Alert.alert('Erro', 'Transação cancelada');
       console.log(error);
@@ -60,7 +59,7 @@ export default function OptionsPayment() {
     <ViewRoot>
       <HeaderOptions viewTop={height * 0.15}>
         <TouchableOpacity onPress={() => setSelectPayments({ payment: null })}>
-          <Icon name="close" size={40} />
+          <Icon name="times" size={40} />
         </TouchableOpacity>
         <TitleHeaderText>
           {!selectPayments.payment
@@ -93,7 +92,7 @@ export default function OptionsPayment() {
             <TextButton>DEBITO</TextButton>
           </Button>
           <Button>
-            <TextButton onPress={() => handleClickSitefPag(2)}>
+            <TextButton onPress={() => handleClickSitefPag(0)}>
               CREDITO
             </TextButton>
           </Button>

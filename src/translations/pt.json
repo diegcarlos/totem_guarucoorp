@@ -23,9 +23,28 @@
     },
     "dataClient": {
       "title": {
-        "name": "IDENTIFICAÇÃO NOME",
-        "email": "IDENTIFICAÇÃO EMAIL",
-        "fone": "IDENTIFICAÇÃO TELEFONE"
+        "name": "Nome",
+        "email": "Email",
+        "fone": "Telefone",
+        "pagamento": "Pagamento"
+      },
+      "description": {
+        "name": "Informe seu nome para confirmação de identificação",
+        "email": "Informe seu e-mail para confirmação de identificação",
+        "fone": "Informe seu telefone para confirmação de identificação"
+      },
+      "input": {
+        "placeholder": "Digite aqui..."
+      },
+      "buttons": {
+        "next": "Próximo",
+        "prev": "Voltar",
+        "finish": "Efetuar pagamento"
+      },
+      "payment": {
+        "dinheiro": "Dinheiro",
+        "card-credit": "Cartão de crédito",
+        "card-debito": "Cartão de débito"
       }
     },
     "optionsPayment": {

@@ -36,6 +36,7 @@ export const CardHeader = styled.View`
   padding: 10px;
 `;
 export const CardTitle = styled.Text`
+  color: #474747;
   font-size: ${fontScale * 25}px;
   font-weight: 600;
 `;
@@ -63,10 +64,12 @@ export const Trajeto = styled.View`
 `;
 
 export const TextMain = styled.Text`
+  color: #474747;
   font-size: ${fontScale * 25}px;
   font-weight: 700;
 `;
 export const TextWng = styled.Text`
+  color: #474747;
   font-weight: 500;
   font-size: ${fontScale * 18}px;
 `;
@@ -74,16 +77,19 @@ export const TextWng = styled.Text`
 export const KmsTimeView = styled.View``;
 
 export const TextTime = styled.Text`
+  color: #474747;
   color: green;
   font-size: ${fontScale * 18}px;
   font-weight: 500;
 `;
 export const TextKms = styled.Text`
+  color: #474747;
   font-size: ${fontScale * 18}px;
   font-weight: 500;
 `;
 
 export const TextTotal = styled.Text`
+  color: #474747;
   font-size: ${fontScale * 24}px;
   font-weight: 600;
   padding: 15px;
@@ -100,6 +106,7 @@ export const ConfirmPress = styled.Pressable`
 `;
 
 export const TextConfirm = styled.Text`
+  color: #474747;
   font-size: ${fontScale * 24}px;
   color: #fff;
   elevation: 3;

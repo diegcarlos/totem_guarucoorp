@@ -1,136 +1,192 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Select } from 'components/Select';
+import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Alert, NativeModules, SafeAreaView, TextInput } from 'react-native';
 import {
-  SearchAddress,
-  SearchAddressLocation,
-} from "@/app/services/SearchAddress";
-import { BottomSheet } from "@/components/BottomSheet";
-import Icon from "@expo/vector-icons/AntDesign";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { Alert, FlatList, TextInput } from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { Divider } from "../Content/styled";
-import {
-  Button,
-  InputConfig,
-  Text,
-  TouchableOpacity,
-  View,
-  ViewBottomSheet,
-} from "./styled";
+  onPrintCut,
+  onPrintDeviceList,
+  onPrintText,
+} from 'react-native-usb-thermal-printer';
+import { Button, InputConfig, Text, View, ViewFlex } from './styled';
+interface TypesUsb {
+  product_name?: string;
+  product_id: number;
+  vendor_id: number;
+  manufacturer_name?: string;
+  device_id: number;
+  device_name: string;
+}
+
+const { SitefPag } = NativeModules;
 export default function ConfigLocationDefault() {
-  const { handleSubmit, control, setValue } = useForm({
-    defaultValues: { lat: "", lng: "" },
+  const { handleSubmit, control, setValue, watch } = useForm({
+    defaultValues: {
+      ipTef: '',
+      cnpj: '',
+      terminalTef: '',
+      cnpjAutomacao: '',
+      empresaSitef: '',
+      comExterior: 0,
+      otp: '',
+      nomeIntegracao: '',
+      defaultImp: 0,
+    },
   });
 
-  const [resultSearch, setResultSearch] = useState<any[]>([]);
-  const [search, setSearch] = useState("");
-  const [pass, setPass] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
-  const [snapPoints, setSnapPoints] = useState(["15%", "37%"]);
+  const [pass, setPass] = useState('');
+  const [dataUsb, setDataUsb] = useState<TypesUsb[]>([]);
 
-  const handleChangeAddress = async (input: string) => {
-    try {
-      setResultSearch([]);
-      if (input.length > 3) {
-        const searchAddress = await SearchAddress(input);
+  const handleEditConfig = async () => {
+    const resp = await AsyncStorage.getItem('config-default');
 
-        setResultSearch(searchAddress);
-        setSnapPoints(["15%", "37%"]);
-        setIsOpen(true);
-      }
-    } catch (error) {
-      console.error(JSON.stringify(error));
+    if (resp) {
+      const dados = JSON.parse(resp);
+      Object.entries(dados).forEach(([key, value]: any) => {
+        setValue(key, value);
+      });
     }
   };
 
   const onFinish = async (data: any) => {
     try {
       const value = JSON.stringify(data);
-      await AsyncStorage.setItem("location-default", value);
+      await AsyncStorage.setItem('config-default', value);
 
-      const location = await AsyncStorage.getItem("location-default");
+      const location = await AsyncStorage.getItem('config-default');
 
       if (location !== null) {
-        Alert.alert("Sucesso", "Localização salva com sucesso", [
-          { text: "Fechar" },
+        Alert.alert('Sucesso', 'Configurações salva com sucesso', [
+          { text: 'Fechar' },
         ]);
+
+        SitefPag.configurarSitef(
+          data.ipTef,
+          data.cnpj,
+          data.terminalTef,
+          data.cnpjAutomacao,
+          data.empresaSitef,
+          Number(data.comExterior),
+          data.otp,
+          data.nomeIntegracao,
+        );
       }
     } catch (error) {
-      Alert.alert("Error", JSON.stringify(error), [{ text: "Fechar" }]);
+      Alert.alert('Error', JSON.stringify(error), [{ text: 'Fechar' }]);
     }
   };
 
-  const handlePressAddress = async (data: any) => {
-    const resp = await SearchAddressLocation(data.place_id);
-    setValue("lat", String(resp.lat));
-    setValue("lng", String(resp.lng));
+  // const response = await SitefPag.configurarSitef(
+  //   '192.168.3.3;192.168.3.3:20036', // ipTEF
+  //   '09517945000150', // cnpj
+  //   'SE000001', // terminalTef
+  //   '00000000', // cnpjAutomacao
+  //   '00000000', // empresaSitef
+  //   0, // comExterior (kotlin.Int)
+  //   '0', // otp
+  //   '', // nomeIntegracao
+  // );
+
+  const handlePressListPrint = async () => {
+    const devices = await onPrintDeviceList();
+    handleEditConfig();
+    setDataUsb(devices.filter((f: any) => f.product_name !== null));
   };
+
+  const handlePrint = async () => {
+    try {
+      const usb = Number(watch('defaultImp'));
+      await onPrintText(usb, 'TESTE DE IMPRESSÃO \n\n\n\n\n');
+      await onPrintCut(usb, true, false);
+    } catch (error: any) {
+      Alert.alert('Erro', error?.message);
+    }
+  };
+
   useEffect(() => {
-    const fetch = setTimeout(async () => {
-      handleChangeAddress(search);
-    }, 1000);
-    return () => {
-      clearTimeout(fetch);
-    };
-  }, [search]);
+    handlePressListPrint();
+  }, []);
+
   return (
-    <GestureHandlerRootView>
+    <SafeAreaView style={{ flex: 1 }}>
       <View>
-        {pass === "masterPass" ? (
+        {pass === 'masterPass' ? (
           <>
-            <InputConfig
-              name="address"
-              control={control}
-              onChangeText={setSearch}
-              placeholder="Endereço"
-            />
-            <InputConfig
-              readOnly
-              name="lat"
-              control={control}
-              placeholder="Latitude"
-            />
-            <InputConfig
-              readOnly
-              name="lng"
-              control={control}
-              placeholder="Longitude"
-            />
-            <Button onPress={handleSubmit(onFinish)}>
-              <Text style={{ color: "#fff" }}>Salvar</Text>
+            <ViewFlex>
+              <InputConfig name="ipTef" control={control} label="Ip Tef" />
+              <InputConfig name="cnpj" control={control} label="CNPJ" />
+            </ViewFlex>
+            <ViewFlex>
+              <InputConfig
+                name="terminalTef"
+                control={control}
+                label="Terminal TEF"
+              />
+              <InputConfig
+                name="cnpjAutomcao"
+                control={control}
+                label="CNPJ Automação"
+              />
+            </ViewFlex>
+
+            <ViewFlex>
+              <InputConfig
+                name="empresaSitef"
+                control={control}
+                label="Empresa Sitef"
+              />
+              <InputConfig
+                name="comExterior"
+                keyboardType="number-pad"
+                control={control}
+                label="COM Exterior"
+              />
+            </ViewFlex>
+            <ViewFlex style={{ marginBottom: 15 }}>
+              <InputConfig name="otp" control={control} label="OTP" />
+              <InputConfig
+                name="nomeIntegracao"
+                control={control}
+                label="Nome da Integração"
+              />
+            </ViewFlex>
+            <ViewFlex style={{ width: 600 }}>
+              <Select
+                label="Impressora padrão"
+                control={control}
+                name="defaultImp"
+                labelStyle={{
+                  fontSize: 16,
+                  fontWeight: 'bold',
+                  marginBottom: 2,
+                }}
+                placeholder="Selecione a usb referente a impressora"
+                options={dataUsb.map(e => {
+                  return {
+                    label: `${e.manufacturer_name} ${e.product_name}`,
+                    value: e.product_id,
+                  };
+                })}
+                primaryColor={'blue'}
+              />
+            </ViewFlex>
+            <Button onPress={() => handlePrint()}>
+              <Text style={{ color: '#fff' }}>Testar impressora</Text>
             </Button>
-            <BottomSheet isOpen={isOpen} snapPoints={snapPoints}>
-              <ViewBottomSheet>
-                <FlatList
-                  ItemSeparatorComponent={Divider}
-                  style={{ height: "100%" }}
-                  showsVerticalScrollIndicator={true}
-                  data={resultSearch}
-                  renderItem={({ item }) => {
-                    return (
-                      <TouchableOpacity
-                        onPress={() => handlePressAddress(item)}
-                      >
-                        <Icon size={20} key={item.place_id} name="pushpin" />
-                        <Text>{item.description}</Text>
-                      </TouchableOpacity>
-                    );
-                  }}
-                />
-              </ViewBottomSheet>
-            </BottomSheet>
+            <Button style={{ marginTop: 15 }} onPress={handleSubmit(onFinish)}>
+              <Text style={{ color: '#fff' }}>Salvar</Text>
+            </Button>
           </>
         ) : (
           <TextInput
             style={{
-              borderStyle: "solid",
+              borderStyle: 'solid',
               width: 300,
               borderRadius: 15,
-              borderColor: "#000",
+              borderColor: '#000',
               borderWidth: 1,
               height: 50,
-              textAlign: "center",
+              textAlign: 'center',
             }}
             passwordRules=""
             secureTextEntry
@@ -140,6 +196,6 @@ export default function ConfigLocationDefault() {
           />
         )}
       </View>
-    </GestureHandlerRootView>
+    </SafeAreaView>
   );
 }
