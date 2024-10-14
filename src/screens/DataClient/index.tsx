@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Glob from 'components/Glob';
 import LanguageSelector from 'components/LanguagenSelector';
 import PayMents from 'components/Payment';
@@ -7,7 +8,9 @@ import { useTranslation } from 'react-i18next';
 import { Alert, Dimensions, Text, View } from 'react-native';
 import MaskInput from 'react-native-mask-input';
 import StepIndicator from 'react-native-step-indicator';
+import { onPrintCut, onPrintText } from 'react-native-usb-thermal-printer';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { gerarComprovante } from '../../util';
 import {
   ButtonStep,
   TextButton,
@@ -25,8 +28,8 @@ const { width, fontScale } = Dimensions.get('screen');
 
 export default function DataClient({ navigation }: any) {
   const [valueInput, setValueInput] = useState('');
-  const [formPagamento, setFormPagamento] = useState<string | number>();
-  const { searchTrajeto } = useData();
+  const [formPagamento, setFormPagamento] = useState<0 | 1 | 'd'>();
+  const { searchTrajeto, handleSitefPag } = useData();
   const [dataClient, setDataClient] = useState({
     name: '',
     email: '',
@@ -84,6 +87,7 @@ export default function DataClient({ navigation }: any) {
     } else if (dataClient.fone.length <= 0 && valueInput.length > 0) {
       setDataClient({ ...dataClient, fone: valueInput });
     } else {
+      console.log(formPagamento);
       if (
         ![0, 1, 'd'].includes(formPagamento as any) &&
         currentPosition === 3
@@ -95,6 +99,32 @@ export default function DataClient({ navigation }: any) {
 
     setValueInput('');
     return true;
+  };
+
+  const handlePay = async () => {
+    try {
+      console.log(formPagamento);
+      if (formPagamento !== undefined) {
+        const resp = await handleSitefPag(
+          formPagamento,
+          String(searchTrajeto.valueDistance) as any,
+        );
+        const dados = JSON.parse(resp as any);
+        const usb = await AsyncStorage.getItem('config-default');
+        const usbData = JSON.parse(usb as any);
+        const com = Number(usbData.defaultImp);
+
+        const print = gerarComprovante(String(searchTrajeto.valueDistance));
+        console.log(print);
+
+        await onPrintText(com, print);
+        await onPrintCut(com, true, false);
+      } else {
+        Alert.alert('Ops.', `Selecione uma forma de pagamento!`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -209,11 +239,9 @@ export default function DataClient({ navigation }: any) {
         <ButtonStep
           finish={currentPosition === labels.length - 1}
           onPress={() => {
-            currentPosition === 3 ? (
-              <></>
-            ) : (
-              onPageChange(currentPosition + 1, 'next')
-            );
+            currentPosition === 3
+              ? handlePay()
+              : onPageChange(currentPosition + 1, 'next');
           }}>
           {currentPosition === labels.length - 1 ? (
             <TextButton>{t('dataClient.buttons.finish')}</TextButton>

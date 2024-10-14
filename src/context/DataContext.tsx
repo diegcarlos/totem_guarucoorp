@@ -41,6 +41,7 @@ export interface TypesConfigApp {
 interface Props {
   searchTrajeto: TypesTrajeto;
   setSearchTrajeto: (data: TypesTrajeto) => void;
+  handleSitefPag: (tipoPag: 0 | 1 | 'd', value: string) => void;
 }
 
 const { SitefPag } = NativeModules;
@@ -64,17 +65,18 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     polygon: [],
   });
 
-  const handleClickSitefPag = async (
-    tipoPag: number,
-    value: string,
-    navigation: any,
-  ) => {
+  const handleSitefPag = async (tipoPag: 0 | 1 | 'd', value: string) => {
     try {
-      const pagar = await SitefPag.pagar(tipoPag, 1, value);
-      navigation.replace('print-payment');
+      let pagar;
+      if (typeof tipoPag === 'number') {
+        pagar = await SitefPag.pagar(tipoPag, 1, value);
+      } else {
+        pagar = 'Dinheiro';
+      }
+
+      return pagar;
     } catch (error) {
-      Alert.alert('Erro', 'Transação cancelada');
-      console.log(error);
+      Alert.alert('Erro', `Transação cancelada: ${error}`);
     }
   };
 
@@ -83,7 +85,8 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, []);
   return (
-    <DataContext.Provider value={{ searchTrajeto, setSearchTrajeto }}>
+    <DataContext.Provider
+      value={{ searchTrajeto, setSearchTrajeto, handleSitefPag }}>
       {children}
     </DataContext.Provider>
   );

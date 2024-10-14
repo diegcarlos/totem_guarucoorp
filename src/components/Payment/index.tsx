@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 interface Props {
-  onTypePay?: (data: string | number) => void;
+  onTypePay?: (data: 0 | 1 | 'd') => void;
 }
 
 export default function PayMents(props: Props) {
@@ -41,7 +41,7 @@ export default function PayMents(props: Props) {
     },
   ];
 
-  const handleSelectPay = (value: string | number) => {
+  const handleSelectPay = (value: 0 | 1 | 'd') => {
     setTyPaySelect(value as any);
     onTypePay?.(value);
   };
@@ -52,7 +52,7 @@ export default function PayMents(props: Props) {
           <ViewCard
             key={e.key}
             select={e.value === tyPaySelect}
-            onPress={() => handleSelectPay(e.value)}>
+            onPress={() => handleSelectPay(e.value as any)}>
             <ViewHeader>
               <TextContent select={e.value === tyPaySelect}>
                 {e.icon}

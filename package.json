@@ -38,7 +38,7 @@
     "react-native-screens": "latest",
     "react-native-step-indicator": "^1.0.3",
     "react-native-svg": "^15.7.1",
-    "react-native-usb-thermal-printer": "^1.0.4",
+    "react-native-usb-thermal-printer": "^1.0.6",
     "react-native-vector-icons": "^10.2.0",
     "react-native-video": "^6.6.2",
     "styled-components": "^6.1.13"
