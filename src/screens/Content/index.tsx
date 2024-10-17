@@ -60,6 +60,8 @@ export default function Content({ navigation }: any) {
       summary: '',
       lastSummary: '',
       polygon: [],
+      initLatitude: null,
+      initLongitude: null,
     });
     setDataPolyline([]);
     navigation.setOptions(defaultHeader);

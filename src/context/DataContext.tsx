@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { Alert, NativeModules } from 'react-native';
 import { MapPolygonProps } from 'react-native-maps';
 import { env } from '../env';
@@ -12,6 +12,8 @@ export interface TypesTrajeto {
   valueDuration: number | null;
   summary: string;
   lastSummary: string;
+  initLatitude: number | null;
+  initLongitude: number | null;
   warning: string;
   polygon: MapPolygonProps['coordinates'][];
   bounds?: any;
@@ -38,10 +40,41 @@ export interface TypesConfigApp {
   otp: string; // otp
   nomeIntegração: string; // nomeIntegracao
 }
+
+interface TypesTefReturn {
+  codAut: string;
+  codControle: string;
+  codNSU: string;
+  dRetorno: string;
+  dTransacao: string;
+  financiamento: string;
+  idTef: string;
+  modPagamento: number;
+  numCartao: string;
+  qtdParcelas: number;
+  rede: string;
+  retTexto: string;
+  tpConfirmacao: number;
+  tpPagamento: string;
+  vPagamento: number;
+  arqRetorno?: string;
+  viaCliente?: string;
+  viaEstabelecimento?: string;
+}
+
+interface TypesTransaction {
+  dataClient: { name: string; email: string; fone: string };
+  dataTransaction: TypesTefReturn;
+}
 interface Props {
   searchTrajeto: TypesTrajeto;
   setSearchTrajeto: (data: TypesTrajeto) => void;
-  handleSitefPag: (tipoPag: 0 | 1 | 'd', value: string) => void;
+  dataTransaction: TypesTransaction;
+  setDataTransaction: (data: TypesTransaction) => void;
+  handleSitefPag: (
+    tipoPag: 0 | 1 | 'd',
+    value: string,
+  ) => Promise<TypesTefReturn | undefined>;
 }
 
 const { SitefPag } = NativeModules;
@@ -49,9 +82,6 @@ const { SitefPag } = NativeModules;
 export const DataContext = createContext({} as Props);
 
 export const DataProvider = ({ children }: { children: React.ReactNode }) => {
-  const [configApp, setConfigApp] = useState<TypesConfigApp>(
-    {} as TypesConfigApp,
-  );
   const [searchTrajeto, setSearchTrajeto] = useState<TypesTrajeto>({
     startAddress: env.DEFAULT_END,
     endAddress: '',
@@ -63,9 +93,18 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     lastSummary: '',
     warning: '',
     polygon: [],
+    initLatitude: null,
+    initLongitude: null,
   });
 
-  const handleSitefPag = async (tipoPag: 0 | 1 | 'd', value: string) => {
+  const [dataTransaction, setDataTransaction] = useState<TypesTransaction>(
+    {} as TypesTransaction,
+  );
+
+  const handleSitefPag = async (
+    tipoPag: 0 | 1 | 'd',
+    value: string,
+  ): Promise<TypesTefReturn | undefined> => {
     try {
       let pagar;
       if (typeof tipoPag === 'number') {
@@ -73,20 +112,25 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
       } else {
         pagar = 'Dinheiro';
       }
+      const dados: TypesTefReturn = JSON.parse(pagar);
+      delete dados.arqRetorno;
+      delete dados.viaCliente;
+      delete dados.viaEstabelecimento;
 
-      return pagar;
+      return dados;
     } catch (error) {
       Alert.alert('Erro', `Transação cancelada: ${error}`);
     }
   };
-
-  useEffect(() => {
-    if (!configApp) {
-    }
-  }, []);
   return (
     <DataContext.Provider
-      value={{ searchTrajeto, setSearchTrajeto, handleSitefPag }}>
+      value={{
+        searchTrajeto,
+        setSearchTrajeto,
+        handleSitefPag,
+        dataTransaction,
+        setDataTransaction,
+      }}>
       {children}
     </DataContext.Provider>
   );

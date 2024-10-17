@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Glob from 'components/Glob';
 import LanguageSelector from 'components/LanguagenSelector';
 import PayMents from 'components/Payment';
@@ -8,9 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Alert, Dimensions, Text, View } from 'react-native';
 import MaskInput from 'react-native-mask-input';
 import StepIndicator from 'react-native-step-indicator';
-import { onPrintCut, onPrintText } from 'react-native-usb-thermal-printer';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { gerarComprovante } from '../../util';
 import {
   ButtonStep,
   TextButton,
@@ -27,9 +24,9 @@ import {
 const { width, fontScale } = Dimensions.get('screen');
 
 export default function DataClient({ navigation }: any) {
+  const { searchTrajeto, handleSitefPag, setDataTransaction } = useData();
   const [valueInput, setValueInput] = useState('');
   const [formPagamento, setFormPagamento] = useState<0 | 1 | 'd'>();
-  const { searchTrajeto, handleSitefPag } = useData();
   const [dataClient, setDataClient] = useState({
     name: '',
     email: '',
@@ -87,7 +84,6 @@ export default function DataClient({ navigation }: any) {
     } else if (dataClient.fone.length <= 0 && valueInput.length > 0) {
       setDataClient({ ...dataClient, fone: valueInput });
     } else {
-      console.log(formPagamento);
       if (
         ![0, 1, 'd'].includes(formPagamento as any) &&
         currentPosition === 3
@@ -103,22 +99,29 @@ export default function DataClient({ navigation }: any) {
 
   const handlePay = async () => {
     try {
-      console.log(formPagamento);
       if (formPagamento !== undefined) {
         const resp = await handleSitefPag(
           formPagamento,
           String(searchTrajeto.valueDistance) as any,
         );
-        const dados = JSON.parse(resp as any);
-        const usb = await AsyncStorage.getItem('config-default');
-        const usbData = JSON.parse(usb as any);
-        const com = Number(usbData.defaultImp);
+        const dados = resp;
 
-        const print = gerarComprovante(String(searchTrajeto.valueDistance));
-        console.log(print);
+        if (dados) {
+          setDataTransaction({
+            dataClient: dataClient,
+            dataTransaction: dados,
+          });
 
-        await onPrintText(com, print);
-        await onPrintCut(com, true, false);
+          navigation.replace('print-payment');
+        }
+        // const usb = await AsyncStorage.getItem('config-default');
+        // const usbData = JSON.parse(usb as any);
+        // const com = Number(usbData.defaultImp);
+
+        // const print = gerarComprovante(String(searchTrajeto.valueDistance));
+
+        // await onPrintText(com, print);
+        // await onPrintCut(com, true, false);
       } else {
         Alert.alert('Ops.', `Selecione uma forma de pagamento!`);
       }

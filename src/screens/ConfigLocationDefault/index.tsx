@@ -8,6 +8,7 @@ import {
   onPrintDeviceList,
   onPrintText,
 } from 'react-native-usb-thermal-printer';
+import { gerarComprovante } from 'util';
 import { Button, InputConfig, Text, View, ViewFlex } from './styled';
 interface TypesUsb {
   product_name?: string;
@@ -96,7 +97,7 @@ export default function ConfigLocationDefault() {
   const handlePrint = async () => {
     try {
       const usb = Number(watch('defaultImp'));
-      await onPrintText(usb, 'TESTE DE IMPRESSÃO \n\n\n\n\n');
+      await onPrintText(usb, gerarComprovante('12,45', 2));
       await onPrintCut(usb, true, false);
     } catch (error: any) {
       Alert.alert('Erro', error?.message);
@@ -115,6 +116,20 @@ export default function ConfigLocationDefault() {
             <ViewFlex>
               <InputConfig name="ipTef" control={control} label="Ip Tef" />
               <InputConfig name="cnpj" control={control} label="CNPJ" />
+            </ViewFlex>
+            <ViewFlex>
+              <InputConfig
+                name="terminal"
+                control={control}
+                keyboardType="number-pad"
+                label="Terminal Guarucoop"
+              />
+              <InputConfig
+                name="seqTerminal"
+                keyboardType="number-pad"
+                control={control}
+                label="Sequencial do Terminal"
+              />
             </ViewFlex>
             <ViewFlex>
               <InputConfig

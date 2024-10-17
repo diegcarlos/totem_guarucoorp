@@ -14,4 +14,9 @@ export const env = {
       PASSWORD: 'Genialtec',
     },
   },
+  GUARUCOORP_API: {
+    URL: 'https://sisgescoop.guarucoop.com/api/',
+    LOGIN: 'TOTEM200',
+    PASSWORD: 'T$291ç',
+  },
 };
