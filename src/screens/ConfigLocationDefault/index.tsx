@@ -8,7 +8,7 @@ import {
   onPrintDeviceList,
   onPrintText,
 } from 'react-native-usb-thermal-printer';
-import { gerarComprovante } from 'util';
+import { gerarComprovante } from '../../util';
 import { Button, InputConfig, Text, View, ViewFlex } from './styled';
 interface TypesUsb {
   product_name?: string;
